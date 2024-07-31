@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      /* Set background with neutral color */
+      body {
+        background-image: url("https://img.freepik.com/free-photo/watercolor-light-steel-blue-wallpaper-image_53876-94665.jpg?size=626&ext=jpg&ga=GA1.1.1700460183.1708214400&semt=ais");
+        background-size: cover;
+        background-position: center;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        font-family: sans-serif;
+      }
+
+      /* Style the Text to Speech link */
+      a {
+        color: #333; /* Dark gray */
+        font-size: 1.2rem; /* Adjust font size as needed */
+        text-decoration: none;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 2rem;
+        transition: all 0.3s ease-in-out;
+      }
+
+      a:hover {
+        color: #666; /* Slightly darker gray */
+        text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Style the heading */
+      h1 {
+        color: #333; /* Dark gray */
+        font-size: 1.8rem; /* Adjust font size as needed */
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+
+      /* Style the input field */
+      input {
+        height: 40px; /* Adjust height as needed */
+        width: 400px; /* Adjust width as needed */
+        padding: 10px;
+        border: 1px solid #ddd; /* Light gray border */
+        border-radius: 5px;
+        font-size: 1rem;
+        box-sizing: border-box; /* Ensures padding doesn't affect width */
+        transition: all 0.3s ease-in-out;
+      }
+
+      input:focus {
+        border-color: #333; /* Dark gray border */
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Style the submit button */
+      button {
+        background-color: #333; /* Dark gray */
+        color: #fff; /* White */
+        border: none;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 1rem;
+        transition: all 0.3s ease-in-out;
+      }
+
+      button:hover {
+        background-color: #444; /* Slightly darker gray */
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Style the message area (optional) */
+      .message {
+        color: #333; /* Dark gray */
+        text-align: center;
+        font-size: 1.2rem; /* Adjust font size as needed */
+        margin-top: 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="#" style="font-size: 50px">Text to Speech</a>
+    <h1>Enter your input:</h1>
+    <form method="POST">
+      <input type="text" name="user_input" required />
+      <br />
+      <center><button type="submit">Submit</button></center>
+    </form>
+
+    <p id="message"></p>
+    <a id="download-button" href="#">Download Audio</a>
+
+    <script>
+      const messageElement = document.getElementById("message");
+      const downloadButton = document.getElementById("download-button");
+
+      downloadButton.addEventListener("click", () => {
+        // Update message and make an HTTP request to download the audio
+        messageElement.textContent = "Downloading...";
+        fetch("/download/audio.mp3")
+          .then((response) => response.blob())
+          .then((blob) => {
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = "audio.mp3";
+            link.click();
+            URL.revokeObjectURL(url);
+            messageElement.textContent = "Download complete!";
+          })
+          .catch((error) => {
+            messageElement.textContent = "Download failed: " + error;
+          });
+      });
+    </script>
+  </body>
+</html>
