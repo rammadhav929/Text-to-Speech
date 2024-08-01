@@ -24,10 +24,15 @@ php
 
 .
 ├── app.py # Main Flask application
+
 ├── templates
+
 │ └── enter.html # HTML template for user input form
+
 ├── static
+
 │ └── audio.mp3 # Directory for static files (e.g., generated audio)
+
 └── README.md # This README file
 
 # Acknowledgments
